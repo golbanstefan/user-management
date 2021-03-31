@@ -1,4 +1,4 @@
-module user-management
+module github.com/golbanstefan/user-management
 
 go 1.16
 
