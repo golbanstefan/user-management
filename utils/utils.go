@@ -4,7 +4,7 @@ import (
 	"firebase.google.com/go/auth"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"user-management/response"
+	"github.com/golbanstefan/user-management/response"
 )
 
 func GetAuthClient(c *gin.Context) *auth.Client {
