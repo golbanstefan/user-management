@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6448256c-fd74-45f8-897b-34b597f948e9" name="Default Changelist" comment="" />
+    <list default="true" id="6448256c-fd74-45f8-897b-34b597f948e9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/errors/error.go" beforeDir="false" afterPath="$PROJECT_DIR$/errors/error.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/User.go" beforeDir="false" afterPath="$PROJECT_DIR$/user/User.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="GOROOT" path="/snap/go/7221" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="false" />
   </component>
@@ -47,5 +54,9 @@
       <screen x="0" y="387" width="2560" height="1053" />
     </state>
     <state x="1075" y="556" width="400" height="334" key="#Go_Modules/2560.360.1920.1080/0.387.2560.1053@0.387.2560.1053" timestamp="1617190598291" />
+    <state x="971" y="430" width="618" height="580" key="find.popup" timestamp="1617194213348">
+      <screen x="0" y="387" width="2560" height="1053" />
+    </state>
+    <state x="971" y="430" width="618" height="580" key="find.popup/2560.360.1920.1080/0.387.2560.1053@0.387.2560.1053" timestamp="1617194213348" />
   </component>
 </project>

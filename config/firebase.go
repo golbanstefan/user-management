@@ -2,7 +2,6 @@ package config
 
 import (
 	"context"
-	"fmt"
 	"path/filepath"
 	"sync"
 
@@ -11,11 +10,15 @@ import (
 	"google.golang.org/api/option"
 )
 
+const KEY = "./keys/firebase-key.json"
+//Firebase interface provide method for connection to google firebase
 type Firebase interface {
 	SetupFirebase() *auth.Client
 	SetPath(path string)
 }
 
+//SetupFirebase provide admin SDK initialization and
+// return firebase Auth Client
 func (f *firebaseStr) SetupFirebase() *auth.Client {
 	opt := option.WithCredentialsFile(f.GetPath())
 
@@ -34,17 +37,19 @@ func (f *firebaseStr) SetupFirebase() *auth.Client {
 	return auth
 }
 
+//GetPath handle an return path to firebase key
 func (f *firebaseStr) GetPath() string {
 	if f.path == "" {
-		f.path = "./keys/mvp-h-c588d-firebase-adminsdk-aofl8-c959b37226.json"
+		f.path = KEY
 	}
 	serviceAccountKeyFilePath, err := filepath.Abs(f.path)
 	if err != nil {
 		panic("Unable to load serviceAccountKeys.json file")
 	}
-	fmt.Println(serviceAccountKeyFilePath)
 	return serviceAccountKeyFilePath
 }
+
+//SetPath set custom path to  location
 func (f *firebaseStr) SetPath(path string) {
 	f.path = path
 }

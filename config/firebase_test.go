@@ -10,7 +10,7 @@ import (
 func Test_firebaseStr_SetupFirebase1(t *testing.T) {
 	// configure firebase
 	f := Init()
-	f.SetPath("../keys/mvp-h-c588d-firebase-adminsdk-aofl8-c959b37226.json")
+	f.SetPath("./keys/firebase-key.json")
 	assert.NotPanics(t, func() {
 		f.SetupFirebase()
 	})
@@ -43,7 +43,7 @@ func TestInit(t *testing.T) {
 }
 
 func Test_firebaseStr_getPath(t *testing.T) {
-	want := "mvp-h-c588d-firebase-adminsdk-aofl8-c959b37226.json"
+	want := "firebase-key.json"
 	f := firebaseStr{}
 	if got := f.GetPath(); !strings.Contains(got, want) {
 		t.Errorf("getPath() = %v, want %v", got, want)

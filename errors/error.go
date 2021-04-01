@@ -15,6 +15,7 @@ type ErrorJson struct {
 	Data    interface{}
 }
 
+
 func (e ErrorJson) Error() string {
 	b, err := json.Marshal(&e)
 	CheckError(err)
@@ -38,6 +39,7 @@ type ValidationError struct {
 	Message   string
 }
 
+//ToString form field error for user friendly output
 func (q FieldError) ToString() string {
 	var sb strings.Builder
 	sb.WriteString("Validation failed on field '" + q.Err.Field() + "'")
@@ -52,6 +54,7 @@ func (q FieldError) ToString() string {
 	return sb.String()
 }
 
+//Json create a json structure for validation error
 func (q FieldError) Json() ValidationError {
 	return ValidationError{
 		Field:     q.Err.Field(),
@@ -69,10 +72,12 @@ type FirebaseError struct {
 	}
 }
 
+//Normalize transform message from firebase to valid json
 func (f FirebaseError) Normalize(err error) []byte {
 	return []byte(strings.Trim(err.Error(), "http error status: 400;body:"))
 }
 
+//ErrToJson handle error in front to transform them in unique format
 func ErrToJson(err error) error {
 	var e ErrorJson
 	switch t := reflect.ValueOf(err).Type().String(); t {

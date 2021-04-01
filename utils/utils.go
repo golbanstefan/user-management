@@ -10,7 +10,6 @@ import (
 func GetAuthClient(c *gin.Context) *auth.Client {
 	authI, exist := c.Get("firebaseAuth")
 	if !exist {
-
 		c.AbortWithStatusJSON(http.StatusBadRequest, response.Get("Firebase auth is loosed"))
 		c.Abort()
 		return nil

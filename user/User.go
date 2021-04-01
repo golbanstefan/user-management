@@ -13,19 +13,7 @@ import (
 	"net/http"
 )
 
-type User interface {
-	GetUser(c *gin.Context)
-	GetUserByEmail(c *gin.Context)
-	GetAllUsers(c *gin.Context)
-	CreateUser(c *gin.Context)
-	CreateUserWithUID(c *gin.Context)
-	UpdateUser(c *gin.Context)
-	DeleteUser(c *gin.Context)
-	BulkDeleteUsers(c *gin.Context)
-	CustomClaimsSet(c *gin.Context)
-}
-
-type Model struct {
+type User struct {
 	Email         string `json:"email"     binding:"required,email"`
 	EmailVerified *bool  `json:"email_verified" binding:"required"`
 	PhoneNumber   string `json:"phone_number,omitempty"`
@@ -46,7 +34,8 @@ type ModelUpdate struct {
 	UID           string `json:"uid,omitempty" binding:"required"`
 }
 
-func (m Model) GetUser(c *gin.Context) {
+//GetUser
+func (m User) GetUser(c *gin.Context) {
 
 	// [END create_user_golang]
 	uuid, exist := c.Get("UUID")
@@ -60,21 +49,20 @@ func (m Model) GetUser(c *gin.Context) {
 	c.JSON(http.StatusOK, response.Get(u))
 }
 
-func (m Model) GetUserByEmail(c *gin.Context) {
-	email := struct {
-		Email string `json:"email" binding:"required"`
-	}{}
-
-	if err := c.ShouldBindJSON(&email); err != nil {
+//GetUserByEmail
+func (m User) GetUserByEmail(c *gin.Context) {
+	if err := c.ShouldBindJSON(&m); err != nil {
 		c.JSON(http.StatusBadRequest, response.Get(errors.ErrToJson(err)))
 		return
 	}
 	ac := utils.GetAuthClient(c)
-	u, err := ac.GetUserByEmail(context.Background(), email.Email)
+	u, err := ac.GetUserByEmail(context.Background(), m.Email)
 	errors.CheckError(err)
 	c.JSON(http.StatusOK, response.Get(u))
 }
-func (m Model) GetAllUsers(c *gin.Context) {
+
+//GetAllUsers
+func (m User) GetAllUsers(c *gin.Context) {
 
 	ac := utils.GetAuthClient(c)
 
@@ -96,7 +84,8 @@ func (m Model) GetAllUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, response.Get(users))
 }
 
-func (m Model) CreateUser(c *gin.Context) {
+//CreateUser
+func (m User) CreateUser(c *gin.Context) {
 	ac := utils.GetAuthClient(c)
 	if err := c.ShouldBindJSON(&m); err != nil {
 		c.JSON(http.StatusBadRequest, response.Get(errors.ErrToJson(err)))
@@ -114,7 +103,9 @@ func (m Model) CreateUser(c *gin.Context) {
 	errors.CheckError(err)
 	c.JSON(http.StatusCreated, response.Get(u))
 }
-func (m Model) CreateUserWithUID(c *gin.Context) {
+
+//CreateUserWithUID
+func (m User) CreateUserWithUID(c *gin.Context) {
 	ac := utils.GetAuthClient(c)
 	if err := c.ShouldBindJSON(&m); err != nil {
 		c.JSON(http.StatusBadRequest, response.Get(errors.ErrToJson(err)))
@@ -133,7 +124,8 @@ func (m Model) CreateUserWithUID(c *gin.Context) {
 	c.JSON(http.StatusOK, response.Get(u))
 }
 
-func (m Model) UpdateUser(c *gin.Context) {
+//UpdateUser
+func (m User) UpdateUser(c *gin.Context) {
 	ac := utils.GetAuthClient(c)
 	var mu ModelUpdate
 	if err := c.ShouldBindJSON(&mu); err != nil {
@@ -152,7 +144,9 @@ func (m Model) UpdateUser(c *gin.Context) {
 	errors.CheckError(err)
 	c.JSON(http.StatusOK, response.Get(u))
 }
-func (m Model) DeleteUser(c *gin.Context) {
+
+//DeleteUser
+func (m User) DeleteUser(c *gin.Context) {
 	ac := utils.GetAuthClient(c)
 	uid := struct {
 		Uid string `json:"uid" binding:"required"`
@@ -168,7 +162,9 @@ func (m Model) DeleteUser(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, nil)
 }
-func (m Model) BulkDeleteUsers(c *gin.Context) {
+
+//BulkDeleteUsers
+func (m User) BulkDeleteUsers(c *gin.Context) {
 	ac := utils.GetAuthClient(c)
 	var uidS []struct {
 		Uid string `json:"uid" binding:"required"`
@@ -190,7 +186,8 @@ func (m Model) BulkDeleteUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, response.Get(deleteUsersResult))
 }
 
-func (m Model) CustomClaimsSet(c *gin.Context) {
+//CustomClaimsSet
+func (m User) CustomClaimsSet(c *gin.Context) {
 	ac := utils.GetAuthClient(c)
 	claims := struct {
 		Uid    string `json:"uid" binding:"required"`
@@ -215,7 +212,8 @@ func (m Model) CustomClaimsSet(c *gin.Context) {
 	c.JSON(http.StatusOK, nil)
 }
 
-func (m Model) setParams() *auth.UserToCreate {
+//setParams
+func (m User) setParams() *auth.UserToCreate {
 	u := (&auth.UserToCreate{}).
 		Email(m.Email).
 		EmailVerified(*m.EmailVerified).
@@ -237,6 +235,8 @@ func (m Model) setParams() *auth.UserToCreate {
 	}
 	return u
 }
+
+//setParams
 func (m ModelUpdate) setParams() *auth.UserToUpdate {
 	u := (&auth.UserToUpdate{}).
 		Email(m.Email).
@@ -256,9 +256,4 @@ func (m ModelUpdate) setParams() *auth.UserToUpdate {
 		u.Disabled(*m.Disabled)
 	}
 	return u
-}
-
-func Management() User {
-	var m Model
-	return m
 }
