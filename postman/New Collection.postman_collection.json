@@ -302,7 +302,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyCd7cnsQOjjN7TOnxWYUs3NBkCzwuWnwx4",
+							"raw": "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key={{key}}",
 							"protocol": "https",
 							"host": [
 								"www",
